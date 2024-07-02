@@ -1,0 +1,45 @@
+:host {
+  .c-chart-brand {
+    position: absolute;
+    width: 100%;
+    height: 100px;
+  }
+}
+
+.head {
+  text-align: left;
+  width: 100%;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background-color: #4aa8b8;
+  color: white;
+}
+
+td,
+th,
+span {
+  // border: 1px solid #dddddd;
+  border: none;
+  text-align: left;
+  padding: 8px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+// tr:nth-child(even) {
+//   // background-color: #dddddd;
+//   background-color: yellow;
+// }
+p {
+  font-weight: bold;
+  // font-size: 17px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: red;
+}

@@ -1,0 +1,168 @@
+<div class="card">
+  <div class="card-header">
+    <div class="col-md-9">
+      <h4>Admission For 2023-2024</h4>
+    </div>
+  </div>
+  <c-card-body>
+    <c-row>
+      <c-col [md]="4">
+        <c-widget-stat-a (click)="PayFormFees()" color="info" text="Step 1"
+          >
+          <ng-template cTemplateId="widgetValueTemplate">
+            Select Subjects and Pay Form Fees
+          </ng-template>
+          <c-dropdown alignment="end" variant="btn-group">
+            <button (click)="PayFormFees()" cButton color="transparent">
+              <c-icon name="cil-description"></c-icon>
+            </button>
+          </c-dropdown>
+          <div slot="footer">
+            <div class="c-chart-wrapper mt-3 mx-3" style="height: 40px;" [@.disabled]="true">
+            </div>
+          </div>
+        </c-widget-stat-a>
+      </c-col>
+
+      <c-col md="4">
+        <c-widget-stat-a (click)="DocumentApproval()"  color="warning"
+                         [title]="'Step 2'"
+          text="Step 2">
+          <ng-template cTemplateId="widgetValueTemplate">
+            Document Approval
+          </ng-template>
+          <c-dropdown alignment="end" variant="btn-group">
+            <button (click)="DocumentApproval()" cButton color="transparent">
+              <c-icon name="cil-columns"></c-icon>
+            </button>
+          </c-dropdown>
+          <div slot="footer">
+            <div class="c-chart-wrapper mt-3" style="height: 70px;" [@.disabled]="true">
+              <div style="text-align: center;"> <h4 style="color: blue;"> {{StatusMessage}}</h4> </div>
+              <!-- {{FeesAttachedMsg}} -->
+            </div>
+          </div>
+        </c-widget-stat-a>
+      </c-col>
+
+      <c-col md="4">
+        <c-widget-stat-a (click)="PayFees()" color="danger"
+                         [title]="'Step 3'">
+          <ng-template cTemplateId="widgetValueTemplate">
+            Pay Fees
+          </ng-template>
+          <c-dropdown alignment="end" variant="btn-group">
+            <button (click)="PayFees()" cButton color="transparent">
+              <c-icon name="cil-speedometer"></c-icon>
+            </button>
+          </c-dropdown>
+          <div slot="footer">
+            <div class="c-chart-wrapper mt-3 mx-3" style="height: 70px;" [@.disabled]="true">
+            </div>
+          </div>
+        </c-widget-stat-a>
+      </c-col>
+
+      <!-- <c-col sm="6" lg="3">
+        <c-widget-dropdown (click)="EditProfile()" color="gradient-primary" header="Edit Profile" text="Step 4">
+          <c-button-group dropdown>
+            <button (click)="EditProfile()" cButton color="transparent">
+              <c-icon name="cil-pencil"></c-icon>
+            </button>
+          </c-button-group>
+          <div slot="footer">
+            <div class="c-chart-wrapper mt-3 mx-3" style="height: 70px;" [@.disabled]="true">
+            </div>
+          </div>
+        </c-widget-dropdown>
+      </c-col> -->
+    </c-row>
+  </c-card-body>
+</div>
+
+
+
+<c-modal id="liveDemoModal" [visible]="visible" backdrop="static"
+         (visibleChange)="handleLiveDemoChange($event)">
+
+  <form [formGroup]="modalForm" (ngSubmit)="IU_Admission()">
+    <c-modal-header style="background-color:lightblue">
+      <h4 class="modal-title" id="modal-basic-title">Admission form fees payment</h4>
+
+    </c-modal-header>
+    <c-modal-body>
+      <!-- <div class="form-group">
+              <label class="required"><b>Existing GRN No.</b></label> (12 digits)
+              <div class="form-group">
+                  <input type="text" formControlName="grnNo" class="form-control modal-validation capitalize"
+                      placeholder="Enter GRN no" [ngClass]="{ 'is-invalid': (modalSubmit || f.grnNo.touched) && f.grnNo.errors,
+                      'is-valid': f.grnNo.touched && !f.grnNo.errors }">
+                      <div *ngIf="modalSubmit && f.grnNo.errors" class="invalid-feedback">
+                          <div *ngIf="f.grnNo.errors.required">GRN No is required
+                          </div>
+                      </div>
+              </div>
+          </div> -->
+      <div class="form-group">
+        <label class="required"><b>Batch</b></label>
+        <div class="form-group">
+          <select class="form-control modal-validation" [(ngModel)]="BatchObject"
+                  [ngClass]="{ 'is-invalid': (modalSubmit || f['batch'].touched) && f['batch'].errors,
+                  'is-valid': f['batch'].touched && !f['batch'].errors }" (change)="modalSelectBatchSubjects(BatchObject)"
+            formControlName="batch">
+            <option value="" disabled selected>--- Please Select ---</option>
+            <option *ngFor="let data of modalBatch; let i = index" [ngValue]="data">{{data.Batch_Name}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="required"><b>Subject Group</b></label>
+        <div class="form-group">
+          <select formControlName="batchSubjects" [(ngModel)]="selectedObject"
+                  [ngClass]="{ 'is-invalid': (modalSubmit || f['batchSubjects'].touched) && f['batchSubjects'].errors,
+                  'is-valid': f['batchSubjects'].touched && !f['batchSubjects'].errors }"
+            (change)="onGroupSelected(selectedObject)" class="form-control modal-validation">
+            <option value="" disabled selected>--- Please Select ---</option>
+            <option *ngFor="let data of batchSubjects; let i = index" [ngValue]="data">
+              {{data.Subject_group_code}}</option>
+          </select>
+        </div>
+      </div>
+      <!-- <div class="form-group">
+              <label class="required"><b>Batch</b></label>
+              <div class="form-group">
+                  <select class="form-control modal-validation" [(ngModel)]="existingbatchcode"
+                      (change)="modalSelectBatchSubjects(BatchObject)" formControlName="batch">
+                      <option value="" disabled selected>--- Please Select ---</option>
+                      <option *ngFor="let data of modalBatch; let i = index" [ngValue]="data">{{data.Batch_Name}}
+                      </option>
+                  </select>
+              </div>
+          </div>
+          <div class="form-group">
+              <label class="required"><b>Subject Group</b></label>
+              <div class="form-group">
+                  <select formControlName="batchSubjects" [(ngModel)]="existingsubjectgroupcode"
+                      (change)="onGroupSelected(selectedObject)" class="form-control modal-validation">
+                      <option value="" disabled selected>--- Please Select ---</option>
+                      <option *ngFor="let data of batchSubjects; let i = index" [ngValue]="data">
+                          {{data.Subject_group_code}}</option>
+                  </select>
+              </div>
+          </div> -->
+      <div>
+        <p><b>Selected Subject Code Consists : </b> <br> {{ SubjectGroups }}</p>
+      </div>
+
+      <div>
+        <h3> Form Amount : ₹ {{formAmount}} </h3>
+      </div>
+    </c-modal-body>
+    <c-modal-footer>
+      <button type="submit" [disabled]="modalForm.invalid"
+              size="md" class="btn btn-outline-dark">Pay</button>
+    </c-modal-footer>
+  </form>
+
+</c-modal>
