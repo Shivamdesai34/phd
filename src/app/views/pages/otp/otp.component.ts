@@ -95,7 +95,9 @@ export class OtpComponent implements OnInit {
 
 
     ValidateOTP() {
+
         this.submitted = true;
+
         let jsonin = {
             Finyear: this.CollegeCodeConst,
             CollegeCode: this.CollegeCodeConst,
@@ -103,6 +105,7 @@ export class OtpComponent implements OnInit {
             Aadhaar: this.otpService.Aadhaar,
             OTP: parseInt(this.otpVerifyForm.controls['otp'].value)
         };
+
         // if (this.otpVerifyForm.invalid) {
         //     return;
         // } else {
